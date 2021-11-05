@@ -21,6 +21,7 @@ class EggTimerView extends WatchUi.View {
 
     public function onTimeout() as Void {
         m_time = Time.now().value() - m_start_time;
+        //m_time = m_time * 120;
         var vibeProfiles = [
             new Attention.VibeProfile(50,100)
         ];
@@ -49,13 +50,20 @@ class EggTimerView extends WatchUi.View {
         dc.clear();
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         
-        var minutes = m_time / 60;
+        var sTime = timeString();
+        dc.drawText(dc.getWidth() / 2 - sTime.length() * 5, (dc.getHeight() / 2 - 20), Graphics.FONT_LARGE, sTime, Graphics.TEXT_JUSTIFY_LEFT);
+    }
 
-        var string = "Working: " + minutes + "min";
-        dc.drawText(20, (dc.getHeight() / 2 - 10), Graphics.FONT_LARGE, string, Graphics.TEXT_JUSTIFY_LEFT);
-    
-        // Call the parent onUpdate function to redraw the layout
-        //View.onUpdate(dc);
+    function timeString() as string {
+        
+        if (m_time < 60 * 60 ){
+            var minutes = m_time / 60;
+            return minutes + "min";
+        }else{
+            var minutes = ( m_time / 60 ) % 60;
+            var hours = m_time / 3600;
+            return hours + "hr " + minutes + "min";
+        }
     }
 
     // Called when this View is removed from the screen. Save the

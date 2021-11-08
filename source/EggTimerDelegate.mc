@@ -12,10 +12,8 @@ class EggTimerDelegate extends WatchUi.BehaviorDelegate {
         _view = view;
     }
 
-    //! Stop the first timer on menu event
-    //! @return true if handled, false otherwise
-    public function onMenu() as Boolean {
-        _view.stopTimer();
+    public function onSelect() as Boolean {
+        _view.startStopTimer();
         return true;
     }
 }

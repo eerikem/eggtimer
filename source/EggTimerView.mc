@@ -9,13 +9,21 @@ class EggTimerView extends WatchUi.View {
     private var m_start_time as Number = 0; 
     private var m_time as Number = 0;
     private var m_timer as Timer.Timer?;
-    // private var m_multiplier as Number = 120;
-    private var m_multiplier as Number = 1;
+    private var m_multiplier as Number = 120;
+    // private var m_multiplier as Number = 1;
     private var m_modes as Array = [3,30];
     private var m_mode as Number = 1;
 
-    private function getTimerInterval() as Number{
+    public function getTimerInterval() as Number{
         return m_modes[m_mode];
+    }
+
+    public function setTimerMode(mode){
+        if (mode == :three){
+            m_mode = 0;
+        }else if (mode == :thirty){
+            m_mode = 1;
+        }
     }
 
     function initialize() {
@@ -39,7 +47,7 @@ class EggTimerView extends WatchUi.View {
         var vibeProfiles = [
             new Attention.VibeProfile(50,100)
         ];
-        if(m_time % (60 * getTimerInterval()) == 0){
+        if(m_time % (60 * getTimerInterval()) == 0 && m_time > 0){
             Attention.vibrate(vibeProfiles);
         }
 
@@ -93,20 +101,6 @@ class EggTimerView extends WatchUi.View {
         }else{
             resetTimer();
             WatchUi.requestUpdate();
-        }
-    }
-
-    public function incrementMode() as Void {
-        m_mode++;
-        if (m_mode >= m_modes.size()){
-            m_mode = 0;
-        }
-    }
-
-    public function decrementMode() as Void {
-        m_mode--;
-        if (m_mode < 0){
-            m_mode = m_modes.size() - 1;
         }
     }
 }

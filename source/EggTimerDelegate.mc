@@ -1,5 +1,6 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
+import Toybox.System;
 
 //! Input handler to stop timer on menu press
 class EggTimerDelegate extends WatchUi.BehaviorDelegate {
@@ -14,6 +15,20 @@ class EggTimerDelegate extends WatchUi.BehaviorDelegate {
 
     public function onSelect() as Boolean {
         _view.startStopTimer();
+        return true;
+    }
+
+    public function onBack() as Boolean {
+        System.exit();
+    }
+
+    public function onNextPage() as Boolean {
+        _view.incrementMode();
+        return true;
+    }
+
+    public function onPreviousPage() as Boolean {
+        _view.decrementMode();
         return true;
     }
 }
